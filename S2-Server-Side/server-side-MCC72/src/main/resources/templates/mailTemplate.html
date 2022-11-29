@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<style>
+body {background-color: #FAF9F7;}
+h1   {color: #080204; padding-left:8%; padding-top:5%; font-size:300%; font-family: Arial, sans-serif;}
+p    {color: #19160f; padding-left:8%; padding-top:1%; font-size:102%;}
+button {
+  border: none;
+  color: white;
+  margin-left: 8%;
+  margin-top: 4%;
+  padding: 2%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 102%;
+  cursor: pointer;
+  background-color:#7e714d;
+}
+a {color: white; text-decoration:none;}
+</style>
+
+<body>
+
+    <h1>Hey, <span th:text="${emailRequest.getName()}"></span>!</h1>
+<p><span th:text="${emailRequest.getBody()}"></span></p>
+<p>Thank you and have a nice day!</p>
+
+<button><a href="https://hndhryd-portfolio.netlify.app/" target="_blank">Click here for the portfolio.</a></button>
+
+</body>
+</html>
