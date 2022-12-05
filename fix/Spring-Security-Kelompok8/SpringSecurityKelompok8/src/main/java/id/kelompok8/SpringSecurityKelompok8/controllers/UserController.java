@@ -11,6 +11,8 @@ import id.kelompok8.SpringSecurityKelompok8.services.UserEntityService;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,16 +27,17 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping("user")
+// @PreAuthorize("hasAnyRole('USER, 'ADMIN')")
 public class UserController {
-private UserEntityService userEntityService;
 
-     //    localhost:8081/api/role
+    private UserEntityService userEntityService;
+
     @GetMapping
     public List<Map<String, Object>> getAllMap(){
         return userEntityService.getAllMap();
     }
     
-    //    localhost:8081/api/country
+
     @PostMapping
     public UserEntity insert(@RequestBody UserRegistrationDto userEntity){
         System.out.println("controller here");
@@ -44,7 +47,7 @@ private UserEntityService userEntityService;
     }
 
     @GetMapping("/verify/{username}/{token}")
-  public String verify(@PathVariable String username,@PathVariable String token){
+    public String verify(@PathVariable String username,@PathVariable String token){
        Boolean isActivated = userEntityService.verify(username,token);
          return isActivated ? "Account Activated." : "Invalid Verification Code.";
     }
