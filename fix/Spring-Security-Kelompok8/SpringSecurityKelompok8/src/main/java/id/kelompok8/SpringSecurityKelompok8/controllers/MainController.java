@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @AllArgsConstructor
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+// @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class MainController {
 
     private UserEntityService ues;

@@ -40,7 +40,11 @@ public class Privilege {
   @Column(nullable = false)
   private String name;
 
-  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-  @ManyToMany(mappedBy = "privileges")
-  private List<Role> priviliges;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+    name = "role_privilege",
+    joinColumns = @JoinColumn(name = "privilege_id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private List<Role> userRole;
 }

@@ -22,7 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @AllArgsConstructor
 @RestController
 @RequestMapping("employee")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+// @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -46,7 +46,7 @@ public class EmployeeController {
         return "<p style=\"color:blue;\">Welcome to ROLE Landing Page</p>";
     }
     
-    @PreAuthorize("hasAuthority('CREATE_ADMIN')")
+    // @PreAuthorize("hasAuthority('CREATE_ADMIN')")
     @PostMapping
     public Employee insert(@RequestBody UserRegistrationDto employee) {
         Employee e = employeeService.insert(employee);

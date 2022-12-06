@@ -45,11 +45,8 @@ public class Role {
     @ManyToMany(mappedBy = "userRole")
     private List<UserEntity> userRole;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-    name = "role_privilege",
-    joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
-    inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id")
-  )
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+  @ManyToMany(mappedBy = "userRole")
+  
   private List<Privilege> privileges;
 }
