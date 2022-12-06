@@ -5,6 +5,8 @@
  */
 package id.kelompok8.SpringSecurityKelompok8.models.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,14 +21,18 @@ import lombok.NoArgsConstructor;
 
 public class UserRegistrationDto {
 
+    private String first_name;
+
+    private String last_name;
+
+    private String email;
+
+    private String phone_number;
+
     private String username;
 
     private String password;
-
-    private Boolean isActive;
-
-    private String verificationCode;
     
-    private Integer roleId; //role
+    private List<Integer> roles;
 
 }

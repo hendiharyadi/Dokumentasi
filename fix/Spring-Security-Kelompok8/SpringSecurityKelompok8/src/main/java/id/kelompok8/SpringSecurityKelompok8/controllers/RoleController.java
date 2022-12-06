@@ -10,6 +10,7 @@ import id.kelompok8.SpringSecurityKelompok8.services.RoleService;
 import java.util.List;
 import java.util.Map;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,37 +27,41 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping("role")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class RoleController {
  private RoleService roleService;
 
-    //    localhost:8081/api/role
+    @PreAuthorize("hasAuthority('READ_ADMIN')")
     @GetMapping
     public List<Map<String, Object>> getAllMap(){
         return roleService.getAllMap();
     }
 
+    @PreAuthorize("hasAuthority('READ_ADMIN')")
     @GetMapping("dashboard")
     public String dashboard() {
         return "<p style=\"color:blue;\">Welcome to ROLE Dashboard</p>";
     }
 
+    @PreAuthorize("hasAuthority('READ_ADMIN')")
     @GetMapping("landing-page")
     public String landingPage() {
         return "<p style=\"color:blue;\">Welcome to ROLE Landing Page</p>";
     }
     
-    //    localhost:8081/api/role
+    @PreAuthorize("hasAuthority('CREATE_ADMIN')")
     @PostMapping
     public Role insert(@RequestBody Role role){
         return roleService.insert(role);
     }
     
-//    localhost:8081/api/role
+    @PreAuthorize("hasAuthority('UPDATE_ADMIN')")
     @PutMapping
     public Role update(@RequestBody Role role){
         return roleService.update(role);
     }
     
+    @PreAuthorize("hasAuthority('DELETE_ADMIN')")
     @DeleteMapping("{id}")
     public String delete(@PathVariable Integer id){
         return roleService.deleteById(id);

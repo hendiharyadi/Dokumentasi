@@ -6,12 +6,11 @@
 package id.kelompok8.SpringSecurityKelompok8.services;
 
 import id.kelompok8.SpringSecurityKelompok8.models.dto.request.UserRegistrationDto;
-import id.kelompok8.SpringSecurityKelompok8.models.entity.Role;
 import id.kelompok8.SpringSecurityKelompok8.models.entity.UserEntity;
+import id.kelompok8.SpringSecurityKelompok8.repositories.EmployeeRepository;
 import id.kelompok8.SpringSecurityKelompok8.repositories.RoleRepository;
 import java.util.Arrays;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,12 +18,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import id.kelompok8.SpringSecurityKelompok8.repositories.UserEntityRepository;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -44,6 +43,7 @@ public class UserEntityService implements UserDetailsService {
     private BCryptPasswordEncoder passwordEncoder;
     private UserEntityRepository ur;
     private RoleRepository rr;
+    private EmployeeRepository er;
     private MailContentBuilder mailContentBuilder;
     private JavaMailSender mailSender;
 
@@ -94,24 +94,27 @@ public class UserEntityService implements UserDetailsService {
 //        return auth.getName();
 
         Map<String, Object> m = new HashMap<>();
-        m.put("userName", auth.getName());
-        m.put("userRoles", auth.getAuthorities().toString());
+        m.put("userId", ur.findByUsername(auth.getName()).get().getId());
+        m.put("name", auth.getName());
+        m.put("authorities", auth.getAuthorities().toString());
 
         return m;
     }
 
     public UserEntity insert(UserRegistrationDto u) {
         System.out.println("service here");
+        System.out.println(u.getRoles());
         String verificationCode = UUID.randomUUID().toString();
         UserEntity ue = new UserEntity();
         ue.setUsername(u.getUsername());
         ue.setIsActive(false);
         ue.setVerificationCode(verificationCode);
         ue.setPassword(passwordEncoder.encode(u.getPassword()));
-        ue.setUserRole(Arrays.asList(rr.findByName("ROLE_USER").get()));
+        ue.setUserRole(u.getRoles().stream().map(roleId -> rr.findById(roleId).get()).collect(Collectors.toList()));
         ue.setFailedAttempt(0);
-
+        ue.setEmployee(er.findByEmail(u.getEmail()).get());
         return ur.save(ue);
+//        return ue;
     }
 
     //update failed attempt +1
@@ -133,7 +136,7 @@ public class UserEntityService implements UserDetailsService {
 
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_MIXED, "UTF-8");
-            messageHelper.setTo("hndhryd@gmail.com"); //change to userEntity.getEmail();
+            messageHelper.setTo(userEntity.getEmail()); //change to userEntity.getEmail();
             messageHelper.setSubject("Verification Mail");
             String content = mailContentBuilder.build(userEntity.getUsername());
             messageHelper.setText(content, true);
@@ -143,7 +146,7 @@ public class UserEntityService implements UserDetailsService {
         };
 
         mailSender.send(messagePreparator);
-        System.out.println("Send email with verify link...");
+        System.out.println("Send email to "+userEntity.getEmail()+" with verify link...");
 
 //        return "Verification mail sent.";
     }
@@ -162,4 +165,23 @@ public class UserEntityService implements UserDetailsService {
         }
 
     }
+    
+//      public List<Map<String, Object>> getAllMapAuth(){
+//      return ur.findAll().stream().map(auth -> {
+//          Map<String, Object> m = new HashMap<>();
+//          m.put("userId", auth.getId());
+//          m.put("name", auth.getUsername());
+//          m.put("authorities", getAllMapRole());
+//          return m;
+//      }).collect(Collectors.toList());
+//  }
+//  
+//  public List<Map<String, Object>> getAllMapRole(){
+//      return rr.findAll().stream().map(auth -> {
+//          Map<String, Object> m = new HashMap<>();
+//          m.put("role", auth.getName());
+//          m.put("privilege", auth.getPrivileges());
+//          return m;
+//      }).collect(Collectors.toList());
+//  }
 }

@@ -49,9 +49,6 @@ public class UserEntity {
     
     private int failedAttempt;
     
-//    @OneToMany(mappedBy = "userEntity")
-//    private List<Role> roles;
-
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")

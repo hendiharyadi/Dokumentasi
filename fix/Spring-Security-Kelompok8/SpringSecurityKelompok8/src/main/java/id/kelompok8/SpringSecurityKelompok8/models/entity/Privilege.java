@@ -7,11 +7,15 @@ package id.kelompok8.SpringSecurityKelompok8.models.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -38,5 +42,5 @@ public class Privilege {
 
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   @ManyToMany(mappedBy = "privileges")
-  private List<Role> userRole;
+  private List<Role> priviliges;
 }

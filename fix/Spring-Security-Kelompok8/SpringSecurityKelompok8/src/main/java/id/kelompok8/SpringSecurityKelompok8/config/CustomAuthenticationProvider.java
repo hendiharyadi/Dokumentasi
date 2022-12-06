@@ -5,9 +5,11 @@
  */
 package id.kelompok8.SpringSecurityKelompok8.config;
 
+import id.kelompok8.SpringSecurityKelompok8.models.entity.Role;
 import id.kelompok8.SpringSecurityKelompok8.models.entity.UserEntity;
 import id.kelompok8.SpringSecurityKelompok8.repositories.UserEntityRepository;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -48,8 +50,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
                 throw new BadCredentialsException("Account locked. Contact developer for more information.");
             }
             if (passwordEncoder.matches(password, user.getPassword())) {
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(user.getUserRole().get(0).getName()));
+                List<GrantedAuthority> authorities = getAuthorities(user.getUserRole());
+//                authorities.add(new SimpleGrantedAuthority(user.getUserRole().get(0).getName()));
                 
                  ur.setFailedAttemptForUser(0, user.getId());
                 
@@ -67,5 +69,24 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> authentication) {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
+    }
+    
+    public List<GrantedAuthority> getAuthorities(List<Role> roles) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        roles
+                .forEach(
+                        role -> {
+//                            String roleName = "ROLE_" + role.getName().toUpperCase();
+                            authorities.add(new SimpleGrantedAuthority(role.getName()));
+                            role.getPrivileges().forEach(
+                                    privilege -> {
+//                                        String privilegeName = privilege.getName().toUpperCase();
+                                        authorities.add(new SimpleGrantedAuthority(privilege.getName()));
+                                    }
+                            );
+                        }
+                );
+        System.out.println(authorities);
+        return authorities;
     }
 }

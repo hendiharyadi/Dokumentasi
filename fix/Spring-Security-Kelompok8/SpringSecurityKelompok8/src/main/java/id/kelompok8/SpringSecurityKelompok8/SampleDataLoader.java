@@ -6,8 +6,10 @@
 package id.kelompok8.SpringSecurityKelompok8;
 
 import com.github.javafaker.Faker;
+import id.kelompok8.SpringSecurityKelompok8.models.entity.Privilege;
 import id.kelompok8.SpringSecurityKelompok8.models.entity.Role;
 import id.kelompok8.SpringSecurityKelompok8.models.entity.UserEntity;
+import id.kelompok8.SpringSecurityKelompok8.repositories.PrivilegeRepository;
 import id.kelompok8.SpringSecurityKelompok8.repositories.RoleRepository;
 import id.kelompok8.SpringSecurityKelompok8.repositories.UserEntityRepository;
 import java.util.ArrayList;
@@ -28,39 +30,39 @@ import org.springframework.stereotype.Component;
 public class SampleDataLoader implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
+    private final PrivilegeRepository privilegeRepository;
     private final UserEntityRepository userEntityRepository;
     private final Faker faker;
 
     @Override
     public void run(String... args) throws Exception {
 
-        // create 5 rows of table role fake data
-//        List<Role> roles = IntStream.rangeClosed(1,5)
-//                .mapToObj(i -> new Role(0,
-//                        "ROLES_"+faker.job().field().toUpperCase(),
-//                        null)
-//                ).collect(Collectors.toList());
         if (roleRepository.findByName("ROLE_USER").isPresent()) {
             System.out.println("ROLE_USER data already exist.");
         } else {
             List<Role> roles = new ArrayList<>();
-            roles.add(new Role(0, "ROLE_USER", null));
-            roles.add(new Role(0, "ROLE_ADMIN", null));
+            roles.add(new Role(0, "ROLE_USER", null, null));
+            roles.add(new Role(0, "ROLE_ADMIN", null, null));
             roleRepository.saveAll(roles);
-//         create 5 rows of table role fake data
-        List<UserEntity> userEntity = IntStream.rangeClosed(1,5)
-                .mapToObj(u -> new UserEntity(0, 
-                        faker.name().username(), 
-                        faker.bothify("?#?#?#"), 
-                        false, 
-                        faker.bothify("?#?#?#?#?#?#"),
-                        0,
-                        Arrays.asList(roleRepository.findByName("ROLE_USER").get())
-                
-                )
-                ).collect(Collectors.toList());
+        }
 
-        userEntityRepository.saveAll(userEntity);
+        if (privilegeRepository.findByName("CREATE_USER").isPresent()) {
+            System.out.println("CREATE_USER data already exist.");
+        } else {
+            List<Role> rolesUser = Arrays.asList(roleRepository.findByName("ROLE_USER").get());
+            List<Role> rolesAdmin = Arrays.asList(roleRepository.findByName("ROLE_ADMIN").get());
+            List<Privilege> privileges = new ArrayList<>();
+            privileges.add(new Privilege(0, "CREATE_USER",rolesUser ));
+            privileges.add(new Privilege(0, "READ_USER", rolesUser));
+            privileges.add(new Privilege(0, "UPDATE_USER", rolesUser));
+            privileges.add(new Privilege(0, "DELETE_USER", rolesUser));
+
+            privileges.add(new Privilege(0, "CREATE_ADMIN", rolesAdmin));
+            privileges.add(new Privilege(0, "READ_ADMIN", rolesAdmin));
+            privileges.add(new Privilege(0, "UPDATE_ADMIN", rolesAdmin));
+            privileges.add(new Privilege(0, "DELETE_ADMIN", rolesAdmin));
+
+            privilegeRepository.saveAll(privileges);
         }
     }
 }

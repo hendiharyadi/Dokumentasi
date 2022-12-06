@@ -5,6 +5,7 @@
  */
 package id.kelompok8.SpringSecurityKelompok8.services;
 
+import id.kelompok8.SpringSecurityKelompok8.models.dto.request.UserRegistrationDto;
 import id.kelompok8.SpringSecurityKelompok8.models.entity.Employee;
 import id.kelompok8.SpringSecurityKelompok8.repositories.EmployeeRepository;
 import java.util.HashMap;
@@ -23,15 +24,15 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 @AllArgsConstructor
 public class EmployeeService {
-    
+
     private EmployeeRepository er;
-    
-    public List<Employee> findAll(){
-        if(er.findAll().isEmpty()){
+
+    public List<Employee> findAll() {
+        if (er.findAll().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data available.");
         }
-        
-        for (Employee employee : er.findAll()){
+
+        for (Employee employee : er.findAll()) {
             employee.getFirst_name();
             employee.getLast_name();
             employee.getEmail();
@@ -42,8 +43,8 @@ public class EmployeeService {
         }
         return er.findAll();
     }
-    
-    public List<Map<String, Object>> getAllMap(){
+
+    public List<Map<String, Object>> getAllMap() {
         return er.findAll().stream().map(employee -> {
             Map<String, Object> m = new HashMap<>();
             m.put("employeeId", employee.getId());
@@ -57,29 +58,35 @@ public class EmployeeService {
             return m;
         }).collect(Collectors.toList());
     }
-    
-    public Employee findById(Integer id){
-        if (!er.existsById(id)){
+
+    public Employee findById(Integer id) {
+        if (!er.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Data is not exist.");
         }
         return er.findById(id).get();
     }
-    
-    public Employee insert(Employee e) {
-                if (er.existsById(e.getId())) {
-                    throw new ResponseStatusException(HttpStatus.FOUND, "Data is exist!!!");
-                }
-            
-                return er.save(e);
-            }
-        
 
-    public Employee update(Employee e) {
-        if(!er.existsById(e.getId())){
+    public Employee insert(UserRegistrationDto e) {
+        if (er.findByEmail(e.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.FOUND, "Data is exist!!!");
+        }
+        Employee employee = new Employee();
+        employee.setFirst_name(e.getFirst_name());
+        employee.setLast_name(e.getLast_name());
+        employee.setEmail(e.getEmail());
+        employee.setPhone_number(e.getPhone_number());
+        employee.setHire_date(java.time.LocalDate.now().toString());
+        employee.setSalary(1000);
+        employee.setCommission_pct(0);
+        return er.save(employee);
+    }
+
+    public Employee update(UserRegistrationDto e) {
+        if (er.findByEmail(e.getEmail()).isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Data is not exist");
         }
-        
-        return er.save(e);
+        Employee employee = new Employee();
+        return er.save(employee);
     }
 
     public String deleteById(Integer id) {

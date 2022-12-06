@@ -27,17 +27,17 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RestController
 @RequestMapping("user")
-// @PreAuthorize("hasAnyRole('USER, 'ADMIN')")
+@PreAuthorize("hasRole('ROLE_USER')")
 public class UserController {
 
     private UserEntityService userEntityService;
-
+    
+    @PreAuthorize("hasAuthority('READ_USER')")
     @GetMapping
     public List<Map<String, Object>> getAllMap(){
         return userEntityService.getAllMap();
     }
     
-
     @PostMapping
     public UserEntity insert(@RequestBody UserRegistrationDto userEntity){
         System.out.println("controller here");
@@ -51,12 +51,14 @@ public class UserController {
        Boolean isActivated = userEntityService.verify(username,token);
          return isActivated ? "Account Activated." : "Invalid Verification Code.";
     }
-
+    
+    @PreAuthorize("hasAuthority('READ_USER')")
     @GetMapping("dashboard")
     public String dashboard() {
         return "<p style=\"color:blue;\">Welcome to USER Dashboard</p>";
     }
-
+    
+    @PreAuthorize("hasAuthority('READ_USER')")
     @GetMapping("landing-page")
     public String landingPage() {
         return "<p style=\"color:blue;\">Welcome to USER Landing Page</p>";

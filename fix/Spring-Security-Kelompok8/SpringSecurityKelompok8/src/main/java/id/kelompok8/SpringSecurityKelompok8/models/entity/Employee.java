@@ -51,8 +51,8 @@ public class Employee {
     @Column (length = 8, nullable = true)
     private int salary;
     
-    @Column (nullable = true)
-    private int commission_pct;
+    @Column (length = 8, precision = 2, nullable = true)
+    private float commission_pct;
     
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
