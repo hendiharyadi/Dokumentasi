@@ -1,0 +1,86 @@
+* {
+    border: 2px solid #ddd;
+    padding: 15px;
+    margin: 15px;
+  }
+  
+  html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    max-width: 650px;
+    margin: 20px auto;
+  }
+
+  body > h1 {
+    position: fixed;
+    background-color: lightseagreen;
+    color: antiquewhite;
+  }
+
+  #a > p:first-child{
+    background-color: lightgreen;
+  }
+
+  p::before {
+    content: "Hai! ";
+  }
+
+  p::after {
+    content: " Trims...";
+  }
+
+  ::marker{
+    color: lightslategrey;
+  }
+
+  ::selection{
+    background-color: bisque;
+  }
+
+  #a > a{
+    background-color: lightgoldenrodyellow;
+    color: lightskyblue;
+    text-decoration: none;
+  }
+
+  #a > a:hover{
+    color: lightslategray;
+  } 
+
+  #a > a:active{
+    background-color: lightslategray;
+  } 
+
+  #a > li:first-child{
+    background-color: lightcoral;
+    color: lightblue;
+  }
+
+  #a > li:nth-child(2){
+    background-color: lightblue;
+    color: lightcoral;
+  }
+  
+  #a > li:nth-child(3){
+    background-color: lightslategray;
+    color: lawngreen;
+  }
+
+ #a > li:nth-child(4){
+    background-color: red;
+    color: aquamarine;
+  }
+
+  #a > li:nth-child(5){
+    background-color: grey;
+    color: yellowgreen;
+  }
+
+  #a > li:first-child:hover, #a > li:nth-child(2):hover, #a > li:nth-child(3):hover, #a > li:nth-child(4):hover, #a > li:nth-child(5):hover{
+    background-color: yellow;
+    color: black;
+  }
+  
