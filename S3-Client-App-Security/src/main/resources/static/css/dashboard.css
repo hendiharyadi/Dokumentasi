@@ -1,0 +1,25 @@
+*{
+    height: 100vh;
+}
+
+.main{
+    background: linear-gradient(34deg, rgba(34, 193, 195, 1) 9%, rgb(219, 178, 90) 92%);
+    background-image: url(https://wallpaperbat.com/img/431163-sicily-wallpaper.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.card{
+    padding: 3rem 2.5rem;
+    height: 42vh;
+    width: 40vw;
+    background: rgb(248, 247, 243);
+    border-radius: 1rem;
+    border: 0
+}
+

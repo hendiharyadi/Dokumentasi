@@ -1,0 +1,108 @@
+html,
+body {
+  height: 200%;
+}
+
+#containerDiv {
+  background-color: aqua;
+  border: 6px solid green;
+  margin-bottom: 10px;
+  padding: 10px;
+  position: static;
+}
+
+#containerSpan {
+  display: inline-block;
+  background-color: lightcoral;
+  border: 6px solid red;
+  padding: 10px;
+  margin-top: 10px;
+  position: static;
+}
+
+.static {
+  position: static;
+  padding: 10px;
+  border: 3px solid green;
+}
+
+.relative {
+  position: relative;
+  left: 30px;
+  padding: 10px;
+  border: 3px solid green;
+}
+
+.fixed {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  width: 300px;
+  border: 3px solid green;
+}
+
+div.absolute {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 200px;
+  height: 100px;
+  border: 3px solid green;
+}
+
+div.sticky {
+  position: sticky;
+  width: 300px;
+  height: 30px;
+  top: 0%;
+  border: 3px solid green;
+}
+
+a:link {
+  color: green;
+}
+
+a:visited {
+  color: aqua;
+}
+
+a:hover {
+  color: blueviolet;
+}
+
+.hello::before {
+  content: "MCC72, ";
+}
+
+.hello::after {
+  content: " Semangat...";
+}
+
+/* div.psElement {
+  background-color: aqua;
+  border: 5px solid #ddd;
+  width: 300px;
+  height: 300px;
+  position: relative;
+} */
+
+/* div.psElement::before,
+div.psElement::after {
+  content: "";
+  border: 5px solid #ddd;
+  width: 300px;
+  height: 300px;
+  background-color: aqua;
+  position: relative;
+}
+
+div.psElement::before {
+  top: -15px;
+  bottom: -15px;
+  background-color: lightcoral;
+} */
+
+div.psElement {
+  transform: translate(-50%);
+}

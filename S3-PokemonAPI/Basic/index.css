@@ -1,0 +1,21 @@
+h2 {
+  color: white;
+  background-color: lightcoral;
+}
+/* comment in css */
+
+#container {
+  background-color: lightblue;
+}
+
+.contain {
+  color: gray;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#try {
+  background-color: yellow;
+  border: 10px solid green;
+  padding: 10px;
+  margin: 50px;
+}

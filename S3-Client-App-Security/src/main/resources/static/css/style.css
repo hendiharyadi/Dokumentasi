@@ -1,0 +1,43 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login {
+    height: 100vh;
+    background: linear-gradient(34deg, rgba(34, 193, 195, 1) 9%, rgb(219, 178, 90) 92%);
+    background-image: url(https://static01.nyt.com/images/2019/10/07/science/07SCI-WAIVERS1/07SCI-WAIVERS1-videoSixteenByNineJumbo1600.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login h1 {
+    font-weight: bolder;
+}
+
+.form-login {
+    padding: 3rem 2.5rem;
+    height: 42vh;
+    width: 40vw;
+    background: rgb(248, 247, 243);
+    border-radius: 1rem;
+}
+
+.btn-login {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1.8rem;
+    transition: all 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background-color: #e1dcce;
+}
+
+.btn-login:hover {
+    padding: 0.6rem 2rem;
+    font-weight: bold;
+}

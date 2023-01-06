@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Generate CSRF Token For AJAX -->
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{css/card.css}">
+</head>
+
+<body>
+    <div class = "main">
+    <div class = "card">
+        <h1>Select your destination!</h1>
+        <div class="container">
+            <div class="box">
+                <div class="imgBox">
+                    <a href="/region"><img src="https://www.gaijin.com/wp-content/uploads/2018/05/working-outdoors-coasts-landmass.png" alt="Region/Landmass"></a>
+                </div>
+                <div class="content">
+                    <h2>Regions</br>
+                    <span></span></h2>
+                </div>
+            </div>
+            <div class="box">
+                <div class="imgBox">
+                    <a href="/country"><img src="https://www.worldatlas.com/r/w2560-q80/upload/f4/e0/49/shutterstock-1665254809.png" alt="Countries"></a>
+                </div>
+                <div class="content">
+                    <h2>Countries</br>
+                    <span></span></h2>
+                </div>
+            </div>
+            <button style = "background-color: #3D426B; border-radius: 0.3rem; padding: 0.3rem; color:#F8F7F3" id = "logout"> Logout </button>
+            <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+      <input hidden type="submit" value="Sign Out"/>
+   </form>
+        </div>
+    </div>
+    </div>
+    <!-- JQuery CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{js/csrfToken.js}"></script>
+    <script th:src="@{js/dashboard.js}"></script>
+</body>
+
+</html>

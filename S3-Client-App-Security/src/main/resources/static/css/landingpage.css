@@ -1,0 +1,31 @@
+body{
+    background-color: #F8F7F3;
+}
+
+.container{
+    background-color: #F8F7F3;
+    margin-top: 13%;
+}
+
+h1{
+    color: #BC9E82;
+}
+
+.delete{
+    color: red;
+}
+
+.edit{
+    background-color: #3D426B;
+    color: #F8F7F3;
+}
+
+.detail{
+    background-color: #3D426B;
+    color: #F8F7F3;
+}
+
+.success{
+    background-color: #014D18;
+    color: #F8F7F3;
+}
