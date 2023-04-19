@@ -1,2 +1,2 @@
-# S3-PokemonAPI
-Belajar Get API
+PokemonAPI
+The final files are in the task folder.
