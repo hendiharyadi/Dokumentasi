@@ -1,1 +1,1 @@
-# S2-Spring-Security
+# HR-Schema
